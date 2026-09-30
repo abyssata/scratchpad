@@ -168,8 +168,8 @@ function readPosts() {
         const [first, ...rest] = body.trim().split(/\r?\n/)
         const more = rest.join("\n").trim()
         const html =
-          `<p class="status-line"><span class="who">${escapeHtml(SITE.author)} is</span> ` +
-          `<span class="doing">${marked.parseInline(obsidianToMarkdown(first.trim(), attachments))}</span></p>\n` +
+          `<p class="status-line"><span class="words"><span class="who">${escapeHtml(SITE.author)} is</span> ` +
+          `<span class="doing">${marked.parseInline(obsidianToMarkdown(first.trim(), attachments))}</span></span></p>\n` +
           (more ? `<div class="status-more">${marked.parse(obsidianToMarkdown(more, attachments))}</div>\n` : "")
         return { slug, date, status, html, text: `${SITE.author} is ${body.trim()}` }
       }

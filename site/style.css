@@ -98,7 +98,7 @@ a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
 .dayname {
   display: flex;
   align-items: center;
-  margin: 0 0 0.75rem;              /* the same gap as between a note and its time */
+  margin: 0 0 1rem;
   font: 600 0.72rem/1 var(--caps);
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -113,7 +113,7 @@ a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
 /* its time beneath it, a link to the note on its own */
 .when {
   display: block;
-  margin: 0.75rem 0 0;              /* the same gap as between the day and its first note */
+  margin: 0.75rem 0 0;
   font: italic 0.75rem/1 var(--spectral);
   color: #9a9a9a;
   border-bottom: none;
@@ -210,23 +210,29 @@ a.when:hover { color: var(--accent); }
   text-transform: uppercase;
 }
 
-/* ── A status (status: true): a pale grey slip in the feed ── */
-.status .body {
-  background: #f5f5f5;
-  padding: 0.95rem 1.25rem 1rem;
-  text-align: center;
-}
+/* ── A status (status: true), centred ── */
+.status .body { text-align: center; }
 .status .body p { margin: 0; text-align: center; }
-/* first line: ABYSSATA IS READING, in small oxblood capitals */
+/* first line: ABYSSATA IS READING, in small oxblood capitals, between two grey lines */
 .status .status-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font: 600 0.72rem/1.4 var(--caps);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
 }
+.status .status-line::before, .status .status-line::after {
+  content: "";
+  flex: 0 0 3.5rem;
+  border-top: 1px solid #d6d6d6;
+}
+.status .status-line::before { margin-right: 0.9em; }
+.status .status-line::after { margin-left: 0.9em; }
 .status .status-line strong, .status .status-line em { color: inherit; font: inherit; }
 /* the rest beneath it, in italics */
-.status .status-more { margin-top: 0.3rem; font-style: italic; }
+.status .status-more { margin-top: 0.4rem; font-style: italic; }
 .status .status-more em { font-style: normal; }
 .status .status-more > * { margin: 0 0 0.4em; }
 .status .status-more > :last-child { margin-bottom: 0; }
