@@ -202,6 +202,14 @@ a.when:hover { color: var(--accent); }
 }
 .back { padding-top: 1rem; }
 
+/* "All notes" (and the 404 page's link) set like ABYSSATA beneath the name */
+.back a, .empty a {
+  font: 600 0.72rem var(--caps);
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 footer {
   padding-top: 2.5rem;
   padding-bottom: 3.5rem;

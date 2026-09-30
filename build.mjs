@@ -15,6 +15,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { execFileSync } from "node:child_process"
+import { createHash } from "node:crypto"
 import { marked } from "marked"
 
 const SITE = {
@@ -29,6 +30,10 @@ const SITE = {
 const ROOT = path.dirname(new URL(import.meta.url).pathname)
 const POSTS = path.join(ROOT, "posts")
 const OUT = path.join(ROOT, "public")
+
+// a fingerprint of the stylesheet, added to its address so browsers fetch the
+// new one as soon as it changes instead of reusing an old saved copy
+const CSS_VERSION = createHash("sha1").update(fs.readFileSync(path.join(ROOT, "site", "style.css"))).digest("hex").slice(0, 8)
 
 marked.use({ breaks: true, gfm: true })
 
@@ -190,7 +195,7 @@ function page({ title, body, canonical, description = SITE.description }) {
 <link rel="canonical" href="${SITE.url}${canonical}">
 <link rel="icon" href="${ICON}">
 <link rel="alternate" type="application/rss+xml" title="${escapeHtml(SITE.name)}" href="/feed.xml">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">
 </head>
 <body>
 <header class="masthead">
