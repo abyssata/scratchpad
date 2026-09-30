@@ -162,15 +162,12 @@ a.when:hover { color: var(--accent); }
   color: #666;
 }
 
-/* images in a thin frame, like the painting in the garden */
+/* images sit plainly in the column, unframed */
 .body img {
   display: block;
   max-width: 100%;
   height: auto;
   margin: 0.35em 0 0.9em;
-  padding: 0.4rem;
-  border: 1px solid var(--hairline);
-  background: #fff;
 }
 
 .body code {
