@@ -25,7 +25,7 @@ const SITE = {
   // notes on each page of the feed
   perPage: 10,
   // shown beneath the name; HTML is fine
-  subtitle: 'Loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
+  subtitle: 'loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
   description: "Loose notes from the margins of Abyssata.",
   url: "https://misc.abyssata.blog",
   timeZone: "America/New_York",
