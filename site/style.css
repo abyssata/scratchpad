@@ -50,7 +50,7 @@ main, .masthead, footer {
 }
 
 /* ── The name, like the garden's: spaced capitals, a comma, a hairline ── */
-.masthead { padding-top: 4.5rem; padding-bottom: 2.25rem; }
+.masthead { padding-top: 4.5rem; padding-bottom: 3.25rem; }
 
 .name {
   margin: 0;
@@ -296,5 +296,5 @@ footer {
 .body mark.hit { background: #f1e7e8; padding: 0; }
 
 @media (max-width: 600px) {
-  .masthead { padding-top: 2.5rem; padding-bottom: 1.5rem; }
+  .masthead { padding-top: 2.5rem; padding-bottom: 2.25rem; }
 }
