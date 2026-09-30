@@ -35,8 +35,8 @@ body {
   background: #fff;
   color: var(--ink);
   font-family: var(--spectral);
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -93,12 +93,12 @@ a {
 a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
 
 /* ── A day: its name like the masthead, small; a hairline running right ── */
-.day { margin: 0 0 2.6rem; }
+.day { margin: 0 0 3.25rem; }
 
 .dayname {
   display: flex;
   align-items: center;
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.75rem;              /* the same gap as between a note and its time */
   font: 600 0.72rem/1 var(--caps);
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -107,21 +107,14 @@ a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
 .dayname .date { color: var(--quiet); margin-left: 0.6em; }
 .dayname::after { content: ""; flex: 1; min-width: 2em; margin-left: 0.8em; border-top: 1px solid var(--hairline); }
 
-/* between days, a small circumpunct */
-.sep { margin: -0.6rem 0 2rem; text-align: center; color: var(--accent); opacity: 0.6; line-height: 0; }
-.sep svg { width: 11px; height: 11px; }
-
 /* ── A note ── */
-.post { position: relative; padding: 0 0 1.25rem; }
+.post { padding: 0 0 1.5rem; }
 
-/* its time hangs in the margin, a link to the note on its own */
+/* its time beneath it, a link to the note on its own */
 .when {
-  position: absolute;
-  right: calc(100% + 1.1rem);
-  top: 0.28rem;
-  margin: 0;
-  white-space: nowrap;
-  font: italic 0.8rem/1.5 var(--spectral);
+  display: block;
+  margin: 0.75rem 0 0;              /* the same gap as between the day and its first note */
+  font: italic 0.75rem/1 var(--spectral);
   color: #9a9a9a;
   border-bottom: none;
 }
@@ -130,6 +123,16 @@ a.when:hover { color: var(--accent); }
 .body > :first-child { margin-top: 0; }
 .body > :last-child { margin-bottom: 0; }
 .body p { margin: 0 0 0.8em; }
+
+/* justified, with hyphenation so the spacing stays even */
+.body p, .body li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+
+/* links inside notes set like ABYSSATA beneath the name: small spaced capitals */
+.body a {
+  font: 600 0.8em var(--caps);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
 
 .body strong, .body b { color: var(--accent); }
 .body em { font-style: italic; }
@@ -155,12 +158,15 @@ a.when:hover { color: var(--accent); }
 .body li::marker { color: var(--quiet); }
 
 .body blockquote {
-  margin: 0 0 0.8em;
-  padding: 0.1em 0 0.1em 1rem;
+  margin: 0.2em 0 0.9em;
+  padding: 0.05em 0 0.05em 1rem;
   border-left: 1px solid var(--hairline);
+  font-size: 12.6px;                /* fixed, so it stays put if the body size changes */
   font-style: italic;
   color: #666;
 }
+.body blockquote p { margin: 0 0 0.4em; text-align: left; }
+.body blockquote p:last-child { margin-bottom: 0; }
 
 /* images sit plainly in the column, unframed */
 .body img {
@@ -205,12 +211,6 @@ footer {
 footer a { color: var(--quiet); border-bottom: none; }
 footer a:hover { color: var(--accent); }
 
-/* too narrow for a margin: the time sits above its note */
-@media (max-width: 900px) {
-  .when { position: static; display: block; margin-bottom: 0.2rem; }
-}
-
 @media (max-width: 600px) {
-  body { font-size: 16px; }
   .masthead { padding-top: 2.5rem; padding-bottom: 1.5rem; }
 }

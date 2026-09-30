@@ -208,13 +208,13 @@ ${body}
 `
 }
 
-// one note: its time hangs in the margin and links to the note's own page
+// one note, its time beneath it, linking to the note's own page
 function postHtml(p, { linked = true } = {}) {
   const time = `<time datetime="${p.date.toISOString()}">${timeOf(p.date)}</time>`
   return `<article class="post" id="${p.slug}">
-  ${linked ? `<a class="when" href="/p/${p.slug}/">${time}</a>` : `<p class="when">${time}</p>`}
   <div class="body">
 ${p.html}  </div>
+  ${linked ? `<a class="when" href="/p/${p.slug}/">${time}</a>` : `<p class="when">${time}</p>`}
 </article>`
 }
 
@@ -236,9 +236,6 @@ function byDay(posts) {
   }
   return days
 }
-
-// the circumpunct, small, between days
-const SEP = `<div class="sep" aria-hidden="true"><svg viewBox="-6 -6 112 112"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="8"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>`
 
 const excerpt = (p) => p.text.replace(/[#*_>`\[\]!=%]/g, "").replace(/\s+/g, " ").trim().slice(0, 150)
 
@@ -272,7 +269,7 @@ function build() {
     canonical: "/",
     // the year appears only on days from a year other than the newest note's
     body: posts.length
-      ? byDay(posts).map((d) => dayHtml(d, { withYear: yearOf(d[0].date) !== yearOf(posts[0].date) })).join(`\n${SEP}\n`)
+      ? byDay(posts).map((d) => dayHtml(d, { withYear: yearOf(d[0].date) !== yearOf(posts[0].date) })).join("\n")
       : `<p class="empty">Nothing here yet.</p>`,
   }))
 
