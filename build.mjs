@@ -20,6 +20,10 @@ import { marked } from "marked"
 
 const SITE = {
   name: "MISCELLANY",
+  // statuses read "ABYSSATA IS …"
+  author: "Abyssata",
+  // notes on each page of the feed
+  perPage: 10,
   // shown beneath the name; HTML is fine
   subtitle: 'Loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
   description: "Loose notes from the margins of Abyssata.",
@@ -33,7 +37,9 @@ const OUT = path.join(ROOT, "public")
 
 // a fingerprint of the stylesheet, added to its address so browsers fetch the
 // new one as soon as it changes instead of reusing an old saved copy
-const CSS_VERSION = createHash("sha1").update(fs.readFileSync(path.join(ROOT, "site", "style.css"))).digest("hex").slice(0, 8)
+const fingerprint = (f) => createHash("sha1").update(fs.readFileSync(path.join(ROOT, "site", f))).digest("hex").slice(0, 8)
+const CSS_VERSION = fingerprint("style.css")
+const JS_VERSION = fingerprint("search.js")
 
 marked.use({ breaks: true, gfm: true })
 
@@ -155,7 +161,19 @@ function readPosts() {
       let slug = slugify(data.slug ?? f.replace(/\.md$/, ""))
       while (seen.has(slug)) slug += "-2"
       seen.add(slug)
-      return { slug, date, html: marked.parse(obsidianToMarkdown(body, attachments)), text: body }
+      // a status (`status: true`): its first line follows "ABYSSATA IS",
+      // anything after that sits beneath it
+      const status = String(data.status).toLowerCase() === "true"
+      if (status) {
+        const [first, ...rest] = body.trim().split(/\r?\n/)
+        const more = rest.join("\n").trim()
+        const html =
+          `<p class="status-line"><span class="who">${escapeHtml(SITE.author)} is</span> ` +
+          `<span class="doing">${marked.parseInline(obsidianToMarkdown(first.trim(), attachments))}</span></p>\n` +
+          (more ? `<div class="status-more">${marked.parse(obsidianToMarkdown(more, attachments))}</div>\n` : "")
+        return { slug, date, status, html, text: `${SITE.author} is ${body.trim()}` }
+      }
+      return { slug, date, status, html: marked.parse(obsidianToMarkdown(body, attachments)), text: body }
     })
     .filter(Boolean)
     .sort((a, b) => b.date - a.date)
@@ -184,7 +202,11 @@ const ICON =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 112 112"><circle cx="50" cy="50" r="44" fill="none" stroke="#5c2229" stroke-width="8"/><circle cx="50" cy="50" r="9" fill="#5c2229"/></svg>',
   )
 
-function page({ title, body, canonical, description = SITE.description }) {
+// the magnifier beside the search line
+const MAGNIFIER =
+  '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8.5 15a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13ZM13.2 13.2 18 18" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg>'
+
+function page({ title, body, canonical, description = SITE.description, pager = "", bodyClass = "" }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -197,7 +219,7 @@ function page({ title, body, canonical, description = SITE.description }) {
 <link rel="alternate" type="application/rss+xml" title="${escapeHtml(SITE.name)}" href="/feed.xml">
 <link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">
 </head>
-<body>
+<body${bodyClass ? ` class="${bodyClass}"` : ""}>
 <header class="masthead">
   <h1 class="name"><a href="/">${escapeHtml(SITE.name)}</a></h1>
   <p class="subtitle">${SITE.subtitle}</p>
@@ -206,8 +228,12 @@ function page({ title, body, canonical, description = SITE.description }) {
 ${body}
 </main>
 <footer>
-  <a href="/feed.xml">RSS</a>
+  <div class="foot">
+    <label class="search"><input id="search" type="search" placeholder="search" aria-label="Search the notes" autocomplete="off" spellcheck="false">${MAGNIFIER}</label>
+    <nav class="pager" id="pager">${pager}</nav>
+  </div>
 </footer>
+<script src="/search.js?v=${JS_VERSION}" defer></script>
 </body>
 </html>
 `
@@ -216,7 +242,7 @@ ${body}
 // one note, its time beneath it, linking to the note's own page
 function postHtml(p, { linked = true } = {}) {
   const time = `<time datetime="${p.date.toISOString()}">${timeOf(p.date)}</time>`
-  return `<article class="post" id="${p.slug}">
+  return `<article class="post${p.status ? " status" : ""}" id="${p.slug}">
   <div class="body">
 ${p.html}  </div>
   ${linked ? `<a class="when" href="/p/${p.slug}/">${time}</a>` : `<p class="when">${time}</p>`}
@@ -268,15 +294,43 @@ function build() {
   fs.rmSync(OUT, { recursive: true, force: true })
   fs.mkdirSync(OUT, { recursive: true })
 
-  // the feed
-  write("index.html", page({
-    title: SITE.name,
-    canonical: "/",
-    // the year appears only on days from a year other than the newest note's
-    body: posts.length
-      ? byDay(posts).map((d) => dayHtml(d, { withYear: yearOf(d[0].date) !== yearOf(posts[0].date) })).join("\n")
-      : `<p class="empty">Nothing here yet.</p>`,
-  }))
+  // the year appears only on days from a year other than the newest note's
+  const newestYear = posts.length ? yearOf(posts[0].date) : null
+  const withYear = (d) => yearOf(d) !== newestYear
+
+  // the feed, SITE.perPage notes to a page: /, then /page/2/, /page/3/ …
+  const pages = Math.max(1, Math.ceil(posts.length / SITE.perPage))
+  const pageUrl = (n) => (n === 1 ? "/" : `/page/${n}/`)
+  for (let n = 1; n <= pages; n++) {
+    const notes = posts.slice((n - 1) * SITE.perPage, n * SITE.perPage)
+    const pager =
+      (n > 1 ? `<a href="${pageUrl(n - 1)}" rel="prev">← Newer</a>` : "") +
+      (n < pages ? `<a href="${pageUrl(n + 1)}" rel="next">Older →</a>` : "")
+    write(n === 1 ? "index.html" : `page/${n}/index.html`, page({
+      title: n === 1 ? SITE.name : `Page ${n} · ${SITE.name}`,
+      canonical: pageUrl(n),
+      pager,
+      body: notes.length
+        ? byDay(notes).map((d) => dayHtml(d, { withYear: withYear(d[0].date) })).join("\n")
+        : `<p class="empty">Nothing here yet.</p>`,
+    }))
+  }
+
+  // everything the search line needs, in one file
+  const plain = (html) =>
+    html.replace(/<[^>]+>/g, " ").replace(/&(amp|lt|gt|quot|#39);/g, (m, e) => ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'" })[e])
+      .replace(/\s+/g, " ").trim()
+  write("search.json", JSON.stringify(posts.map((p) => {
+    const { weekday, date } = dayLabel(p.date, withYear(p.date))
+    return {
+      day: dayKey(p.date),
+      heading: `<h2 class="dayname">${weekday}<span class="date">${date}</span></h2>`,
+      status: p.status,
+      body: p.html,
+      when: `<a class="when" href="/p/${p.slug}/"><time datetime="${p.date.toISOString()}">${timeOf(p.date)}</time></a>`,
+      text: plain(p.html),
+    }
+  })))
 
   // one page per post
   for (const p of posts) {
@@ -284,6 +338,7 @@ function build() {
       title: `${dayOf(p.date)} · ${SITE.name}`,
       canonical: `/p/${p.slug}/`,
       description: excerpt(p),
+      bodyClass: "single",
       body: dayHtml([p], { withYear: true, linked: false }) + `\n<p class="back"><a href="/">All notes</a></p>`,
     }))
   }

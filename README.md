@@ -20,6 +20,20 @@ date: 2026-09-30 14:32
 
 **Images.** Drop them into `posts/attachments` and embed as usual: `![[photo.jpg]]`. In Obsidian, set *Files and links → Default location for new attachments* to that folder.
 
+**Statuses.** A note marked as a status shows in the feed as a pale grey slip reading "ABYSSATA IS …". Start the note with:
+
+```
+---
+status: true
+---
+reading
+Breton's Nadja again, slowly
+```
+
+The first line follows ABYSSATA IS (in capitals); anything on the lines after it sits beneath, in italics. The template `templates/Status.md` adds the top part for you (Obsidian: *Templates: Insert template*).
+
+**Search and pages.** The feed shows 10 notes a page (`perPage` in `build.mjs`). The search line at the foot of every page searches all the notes.
+
 Also works: `**bold**` (shows in oxblood), `*italics*`, `> quotes`, lists, `#tags`, `==highlights==`, and `%% private comments %%` (never published).
 
 ## Changing the look

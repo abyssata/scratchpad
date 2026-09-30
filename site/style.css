@@ -210,14 +210,84 @@ a.when:hover { color: var(--accent); }
   text-transform: uppercase;
 }
 
-footer {
-  padding-top: 2.5rem;
-  padding-bottom: 3.5rem;
-  font: 600 0.62rem var(--caps);
-  letter-spacing: 0.14em;
+/* ── A status (status: true): a pale grey slip in the feed ── */
+.status .body {
+  background: #f5f5f5;
+  padding: 0.95rem 1.25rem 1rem;
+  text-align: center;
 }
-footer a { color: var(--quiet); border-bottom: none; }
-footer a:hover { color: var(--accent); }
+.status .body p { margin: 0; text-align: center; }
+/* first line: ABYSSATA IS READING, in small oxblood capitals */
+.status .status-line {
+  font: 600 0.72rem/1.4 var(--caps);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.status .status-line strong, .status .status-line em { color: inherit; font: inherit; }
+/* the rest beneath it, in italics */
+.status .status-more { margin-top: 0.3rem; font-style: italic; }
+.status .status-more em { font-style: normal; }
+.status .status-more > * { margin: 0 0 0.4em; }
+.status .status-more > :last-child { margin-bottom: 0; }
+
+/* a note on its own page: ALL NOTES just beneath it */
+.single .day { margin-bottom: 0; }
+.single .back { padding: 0.75rem 0 0; }
+
+/* ── The foot: search on the left, older and newer on the right ── */
+footer {
+  padding-top: 1.5rem;
+  padding-bottom: 3.5rem;
+}
+.foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* the search line, as in the garden: an italic "search", a single line beneath */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 12rem;
+  max-width: 60%;
+  padding: 0 0 0.1rem;
+  border-bottom: 1px solid #d0d0d0;
+  transition: border-color 0.15s ease;
+}
+.search:hover, .search:focus-within { border-bottom-color: #444; }
+.search input {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: italic 0.9rem/1.15 var(--spectral);
+  color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.search input::placeholder { color: var(--quiet); opacity: 1; }
+.search input::-webkit-search-cancel-button { display: none; }
+.search svg { width: 13px; height: 13px; flex: none; }
+.search svg path { stroke: var(--quiet); }
+
+/* NEWER and OLDER, set like ABYSSATA */
+.pager { display: flex; gap: 1.1rem; white-space: nowrap; }
+.pager a {
+  font: 600 0.72rem var(--caps);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* search results */
+.found { margin: 0 0 1.4rem; font: italic 0.85rem/1.4 var(--spectral); color: var(--quiet); }
+.body mark.hit { background: #f1e7e8; padding: 0; }
 
 @media (max-width: 600px) {
   .masthead { padding-top: 2.5rem; padding-bottom: 1.5rem; }
