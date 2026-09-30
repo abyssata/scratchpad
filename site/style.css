@@ -1,0 +1,219 @@
+/* ═══════════════════════════════════════════════════════════════════
+   SCRATCHPAD · a sibling of Temenos
+   Same inks and typefaces as the garden, set looser: one narrow column
+   of short notes, newest first, each under a small date.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@font-face { font-family: "Spectral"; src: url("fonts/spectral-latin-400-normal.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Spectral"; src: url("fonts/spectral-latin-400-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Spectral"; src: url("fonts/spectral-latin-700-normal.woff2") format("woff2"); font-style: normal; font-weight: 700; font-display: swap; }
+@font-face { font-family: "Spectral"; src: url("fonts/spectral-latin-700-italic.woff2") format("woff2"); font-style: italic; font-weight: 700; font-display: swap; }
+@font-face { font-family: "STIX Two Text"; src: url("fonts/stix-two-text-latin-600-normal.woff2") format("woff2"); font-style: normal; font-weight: 600; font-display: swap; }
+
+:root {
+  --accent: #5c2229;          /* oxblood, as in the garden */
+  --accent-dark: #43161b;
+  --accent-line: rgba(92, 34, 41, 0.3);
+  --ink: #4a4a4a;             /* body text */
+  --quiet: #767676;           /* dates, captions */
+  --hairline: #e4e4e4;
+  --wash: #f6f5f4;            /* code, highlights */
+
+  --spectral: "Spectral", Georgia, serif;
+  --caps: "STIX Two Text", "Times New Roman", Times, serif;
+  --serif: "Times New Roman", Times, serif;
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--spectral);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: #efefef; color: #111; }
+
+main, .masthead, footer {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ── The name, like the garden's: spaced capitals, a comma, a hairline ── */
+.masthead { padding-top: 4.5rem; padding-bottom: 2.25rem; }
+
+.name {
+  margin: 0;
+  font: 600 1.2rem/1 var(--caps);
+  letter-spacing: 0.155em;
+  text-transform: uppercase;
+}
+
+.name a {
+  display: flex;
+  align-items: center;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.name a::before { content: ","; order: 1; letter-spacing: 0; }
+.name a::after { content: ""; order: 2; flex: 1; min-width: 2em; margin-left: 0.35em; border-top: 1px solid #d6d6d6; }
+
+.subtitle {
+  margin: 0.55rem 0 0;
+  font: italic 0.9rem/1.4 var(--spectral);
+  color: var(--quiet);
+}
+
+.subtitle a {
+  font: 600 0.72rem var(--caps);
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Links ── */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-line);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
+
+/* ── A day: its name like the masthead, small; a hairline running right ── */
+.day { margin: 0 0 2.6rem; }
+
+.dayname {
+  display: flex;
+  align-items: center;
+  margin: 0 0 1.1rem;
+  font: 600 0.72rem/1 var(--caps);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.dayname .date { color: var(--quiet); margin-left: 0.6em; }
+.dayname::after { content: ""; flex: 1; min-width: 2em; margin-left: 0.8em; border-top: 1px solid var(--hairline); }
+
+/* between days, a small circumpunct */
+.sep { margin: -0.6rem 0 2rem; text-align: center; color: var(--accent); opacity: 0.6; line-height: 0; }
+.sep svg { width: 11px; height: 11px; }
+
+/* ── A note ── */
+.post { position: relative; padding: 0 0 1.25rem; }
+
+/* its time hangs in the margin, a link to the note on its own */
+.when {
+  position: absolute;
+  right: calc(100% + 1.1rem);
+  top: 0.28rem;
+  margin: 0;
+  white-space: nowrap;
+  font: italic 0.8rem/1.5 var(--spectral);
+  color: #9a9a9a;
+  border-bottom: none;
+}
+a.when:hover { color: var(--accent); }
+
+.body > :first-child { margin-top: 0; }
+.body > :last-child { margin-bottom: 0; }
+.body p { margin: 0 0 0.8em; }
+
+.body strong, .body b { color: var(--accent); }
+.body em { font-style: italic; }
+.body mark { background: var(--wash); color: inherit; padding: 0 0.15em; }
+
+.tag {
+  font-size: 0.85em;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+/* headings inside a note, kept small: this is a notebook, not an essay */
+.body h1, .body h2, .body h3, .body h4, .body h5, .body h6 {
+  margin: 1.2em 0 0.4em;
+  font: 600 0.74rem/1.3 var(--caps);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.body ul, .body ol { margin: 0 0 0.8em; padding-left: 1.2em; }
+.body li { margin: 0.15em 0; }
+.body li::marker { color: var(--quiet); }
+
+.body blockquote {
+  margin: 0 0 0.8em;
+  padding: 0.1em 0 0.1em 1rem;
+  border-left: 1px solid var(--hairline);
+  font-style: italic;
+  color: #666;
+}
+
+/* images in a thin frame, like the painting in the garden */
+.body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.35em 0 0.9em;
+  padding: 0.4rem;
+  border: 1px solid var(--hairline);
+  background: #fff;
+}
+
+.body code {
+  font-size: 0.85em;
+  background: var(--wash);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  padding: 0.05em 0.3em;
+}
+.body pre {
+  overflow-x: auto;
+  background: var(--wash);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  padding: 0.7em 0.9em;
+  line-height: 1.5;
+}
+.body pre code { background: none; border: 0; padding: 0; }
+
+.body hr { border: 0; border-top: 1px solid var(--hairline); margin: 1.2em 0; }
+
+.empty, .back {
+  font-style: italic;
+  color: var(--quiet);
+  padding: 1.5rem 0;
+}
+.back { padding-top: 1rem; }
+
+footer {
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+  font: 600 0.62rem var(--caps);
+  letter-spacing: 0.14em;
+}
+footer a { color: var(--quiet); border-bottom: none; }
+footer a:hover { color: var(--accent); }
+
+/* too narrow for a margin: the time sits above its note */
+@media (max-width: 900px) {
+  .when { position: static; display: block; margin-bottom: 0.2rem; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .masthead { padding-top: 2.5rem; padding-bottom: 1.5rem; }
+}

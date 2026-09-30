@@ -1,0 +1,13 @@
+{
+  "name": "scratchpad",
+  "description": "Scratchpad: loose notes from the margins of Temenos",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node build.mjs && cd public && python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "marked": "^15.0.12"
+  },
+  "private": true,
+  "type": "module"
+}
