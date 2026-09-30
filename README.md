@@ -1,6 +1,6 @@
-# Scratchpad
+# Miscellany
 
-Loose notes from the margins of [Temenos](https://wiki.abyssata.blog). Lives at misc.abyssata.blog.
+Loose notes from the margins of [Abyssata](https://abyssata.blog). Lives at misc.abyssata.blog.
 
 ## Posting
 

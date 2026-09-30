@@ -18,10 +18,10 @@ import { execFileSync } from "node:child_process"
 import { marked } from "marked"
 
 const SITE = {
-  name: "Scratchpad",
+  name: "MISCELLANY",
   // shown beneath the name; HTML is fine
-  subtitle: 'Loose notes from the margins of <a href="https://wiki.abyssata.blog">Temenos</a>.',
-  description: "Loose notes from the margins of Temenos, by Abyssata.",
+  subtitle: 'Loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
+  description: "Loose notes from the margins of Abyssata.",
   url: "https://misc.abyssata.blog",
   timeZone: "America/New_York",
 }
