@@ -24,6 +24,8 @@ const SITE = {
   author: "Abyssata",
   // notes on each page of the feed
   perPage: 10,
+  // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off
+  goatcounter: "abyssata",
   // shown beneath the name; HTML is fine
   subtitle: 'loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
   description: "Loose notes from the margins of Abyssata.",
@@ -233,7 +235,9 @@ ${body}
     <nav class="pager" id="pager">${pager}</nav>
   </div>
 </footer>
-<script src="/search.js?v=${JS_VERSION}" defer></script>
+<script src="/search.js?v=${JS_VERSION}" defer></script>${SITE.goatcounter ? `
+<script>window.goatcounter = { path: (p) => location.host + p }</script>
+<script data-goatcounter="https://${SITE.goatcounter}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>` : ""}
 </body>
 </html>
 `
