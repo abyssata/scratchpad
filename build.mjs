@@ -24,6 +24,13 @@ const SITE = {
   author: "Abyssata",
   // notes on each page of the feed
   perPage: 10,
+  // the row of links beneath the subtitle: [label, address]
+  nav: [
+    ["home", "https://abyssata.blog"],
+    ["garden", "https://wiki.abyssata.blog"],
+    ["diary", "https://abyssata.blog"],
+    ["inquiries", "https://abyssata.blog"],
+  ],
   // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off
   goatcounter: "abyssata",
   // shown beneath the name; HTML is fine
@@ -225,6 +232,7 @@ function page({ title, body, canonical, description = SITE.description, pager = 
 <header class="masthead">
   <h1 class="name"><a href="/">${escapeHtml(SITE.name)}</a></h1>
   <p class="subtitle">${SITE.subtitle}</p>
+  <nav class="sites" aria-label="Elsewhere">${SITE.nav.map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`).join('<span class="sep" aria-hidden="true">·</span>')}</nav>
 </header>
 <main>
 ${body}

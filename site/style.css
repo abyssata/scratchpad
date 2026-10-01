@@ -83,6 +83,15 @@ main, .masthead, footer {
   text-transform: uppercase;
 }
 
+/* ── The row of links beneath the subtitle: small capitals, like ABYSSATA ── */
+.sites { margin: 0.7rem 0 0; display: flex; flex-wrap: wrap; align-items: baseline; row-gap: 0.4rem; }
+.sites a {
+  font: 600 0.68rem var(--caps);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.sites .sep { margin: 0 0.6em; color: #c4c4c4; font: 0.68rem var(--caps); }
+
 /* ── Links ── */
 a {
   color: var(--accent);
