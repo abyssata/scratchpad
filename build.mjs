@@ -27,7 +27,7 @@ const SITE = {
   // the row of links beneath the subtitle: [label, address]
   nav: [
     ["home", "https://abyssata.blog"],
-    ["garden", "https://wiki.abyssata.blog"],
+    ["garden", "https://garden.abyssata.blog"],
     ["miscellany", "https://misc.abyssata.blog"],
     ["diary", "https://diary.abyssata.blog"],
     ["inquiries", "https://ask.abyssata.blog"],
