@@ -28,7 +28,7 @@ const SITE = {
   nav: [
     ["home", "https://abyssata.blog"],
     ["garden", "https://wiki.abyssata.blog"],
-    ["diary", "https://abyssata.blog"],
+    ["diary", "https://diary.abyssata.blog"],
     ["inquiries", "https://ask.abyssata.blog"],
   ],
   // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off
