@@ -83,14 +83,33 @@ main, .masthead, footer {
   text-transform: uppercase;
 }
 
-/* ── The row of links beneath the subtitle: small capitals, like ABYSSATA ── */
-.sites { margin: 0.7rem 0 0; display: flex; flex-wrap: wrap; align-items: baseline; row-gap: 0.4rem; }
-.sites a {
-  font: 600 0.68rem var(--caps);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+/* ── The row of links beneath the subtitle, centred, in the garden menu's
+   voice: lowercase grey Spectral with an italic first letter and a pale
+   underline; the site you're on in oxblood bold ── */
+.sites {
+  margin: 0.8rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  row-gap: 0.4rem;
 }
-.sites .sep { margin: 0 0.6em; color: #c4c4c4; font: 0.68rem var(--caps); }
+.sites a {
+  font: 400 0.84rem/1.35 var(--spectral);
+  text-transform: lowercase;
+  color: var(--quiet);
+  border-bottom: none;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.sites a::first-letter { font-style: italic; }
+.sites a:hover { color: var(--accent); text-decoration-color: var(--accent-line); }
+.sites a[aria-current=page] { color: var(--accent); font-weight: 700; text-decoration-color: var(--accent-line); }
+.sites .sep { margin: 0 0.6em; color: #d8d8d8; font: 0.84rem var(--spectral); }
 
 /* ── Links ── */
 a {
@@ -129,7 +148,7 @@ a:hover { color: var(--accent-dark); border-bottom-color: var(--accent); }
   border-bottom: none;
 }
 /* as a link: a faint grey line beneath, deepening to oxblood on hover */
-a.when { padding-bottom: 2px; border-bottom: 1px solid #dcdcdc; }
+a.when { padding-bottom: 1px; border-bottom: 1px solid #dcdcdc; }
 a.when:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 .body > :first-child { margin-top: 0; }

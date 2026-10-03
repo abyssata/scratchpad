@@ -28,6 +28,7 @@ const SITE = {
   nav: [
     ["home", "https://abyssata.blog"],
     ["garden", "https://wiki.abyssata.blog"],
+    ["miscellany", "https://misc.abyssata.blog"],
     ["diary", "https://diary.abyssata.blog"],
     ["inquiries", "https://ask.abyssata.blog"],
   ],
@@ -234,7 +235,7 @@ function page({ title, body, canonical, description = SITE.description, pager = 
 <header class="masthead">
   <h1 class="name"><a href="/">${escapeHtml(SITE.name)}</a></h1>
   <p class="subtitle">${SITE.subtitle}</p>
-  <nav class="sites" aria-label="Elsewhere">${SITE.nav.map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`).join('<span class="sep" aria-hidden="true">·</span>')}</nav>
+  <nav class="sites" aria-label="Elsewhere">${SITE.nav.map(([label, href]) => `<a href="${href}"${href.replace(/\/$/, "") === SITE.url.replace(/\/$/, "") ? ' aria-current="page"' : ""}>${escapeHtml(label)}</a>`).join('<span class="sep" aria-hidden="true">·</span>')}</nav>
 </header>
 <main>
 ${body}
