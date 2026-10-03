@@ -29,7 +29,7 @@ const SITE = {
     ["home", "https://abyssata.blog"],
     ["garden", "https://wiki.abyssata.blog"],
     ["diary", "https://abyssata.blog"],
-    ["inquiries", "https://abyssata.blog"],
+    ["inquiries", "https://ask.abyssata.blog"],
   ],
   // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off
   goatcounter: "abyssata",
