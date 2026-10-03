@@ -224,7 +224,9 @@ function page({ title, body, canonical, description = SITE.description, pager = 
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${SITE.url}${canonical}">
-<link rel="icon" href="${ICON}">
+<link rel="icon" type="image/png" href="/icon.png">
+<link rel="icon" type="image/svg+xml" href="${ICON}">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="${escapeHtml(SITE.name)}" href="/feed.xml">
 <link rel="stylesheet" href="/style.css?v=${CSS_VERSION}">
 </head>
