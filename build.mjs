@@ -32,7 +32,8 @@ const SITE = {
     ["diary", "https://diary.abyssata.blog"],
     ["inquiries", "https://ask.abyssata.blog"],
   ],
-  // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off
+  // GoatCounter site code (abyssata.goatcounter.com), shared with the garden; "" turns counting off.
+  // Page views go through lantern (see ~/Documents/counter), so ad blockers don't drop them.
   goatcounter: "abyssata",
   // shown beneath the name; HTML is fine
   subtitle: 'loose notes from the margins of <a href="https://abyssata.blog">Abyssata</a>.',
@@ -248,7 +249,7 @@ ${body}
 </footer>
 <script src="/search.js?v=${JS_VERSION}" defer></script>${SITE.goatcounter ? `
 <script>window.goatcounter = { path: (p) => location.host + p }</script>
-<script data-goatcounter="https://${SITE.goatcounter}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>` : ""}
+<script data-goatcounter="https://lantern.inabyssata.workers.dev/count" async src="/lantern.js"></script>` : ""}
 </body>
 </html>
 `
